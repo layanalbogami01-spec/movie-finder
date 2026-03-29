@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Finder</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            padding: 12px 30px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #764ba2;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result-title {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .result-movie {
+            font-size: 22px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .result-error {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎬 What was the best movie that year? </h1>
+        
+        <div class="input-group">
+            <input 
+                type="number" 
+                id="yearInput" 
+                placeholder="Enter a year (e.g., 2006)" 
+                min="1900" 
+                max="2099"
+            >
+            <button onclick="findMovie()">Search</button>
+        </div>
+
+        <div class="result" id="result">
+            <div class="result-title">Best Movie</div>
+            <div class="result-movie" id="resultText"></div>
+        </div>
+    </div>
+
+    <script>
+        const movies = {
+            1980: "The Shining",
+            1981: "Raiders of the Lost Ark",
+            1982: "E.T. the Extra-Terrestrial",
+            1983: "Return of the Jedi",
+            1984: "The Terminator",
+            1985: "Back to the Future",
+            1986: "Ferris Bueller’s Day Off",
+            1987: "The Untouchables",
+            1988: "Die Hard",
+            1989: "Dead Poets Society",
+           1990: "Goodfellas",
+            1991: "The Silence of the Lambs",
+            1992: "Home Alone 2: Lost in New York",
+            1993: "This Boy’s Life",
+            1994: "The Shawshank Redemption",
+            1995: "Before Sunrise",
+            1996: "Scream",
+            1997: "Titanic",
+                1998: "Saving Private Ryan",
+            1999: "The Matrix",
+            2000: "Gladiator",
+            2001: "Harry Potter and the Philosopher’s Stone",
+            2002: "28 Days Later",
+            2003: "The Lord of the Rings: The Return of the King",
+            2004: "The Incredibles",
+            2005: "Batman Begins",
+            2006: "Little Miss Sunshine",
+            2007: "Ratatouille",
+            2008: "The Dark Knight",
+            2009: "Avatar",
+            2010: "Inception",
+            2011: "The Help",
+            2012: "The Hunger Games",
+            2013: "Iron Man 3",
+            2014: "Whiplash",
+            2015: "Mad Max: Fury Road",
+            2016: "La La Land",
+            2017: "Get Out",
+            2018: "Bohemian Rhapsody",
+            2019: "Parasite",
+            2020: "soul",
+            2021: "Dune",
+            2022: "The Batman",
+            2023: "Poor Things",
+            2024: "Dune: Part Two",
+            2025: "Five Nights at Freddy’s 2"
+        };
+
+        function findMovie() {
+            const year = document.getElementById("yearInput").value;
+            const resultDiv = document.getElementById("result");
+            const resultText = document.getElementById("resultText");
+
+            if (!year) {
+                resultText.textContent = "Please enter a year.";
+                resultText.classList.add("result-error");
+                resultDiv.classList.add("show");
+                return;
+            }
+
+            if (movies[year]) {
+                resultText.textContent = movies[year];
+                resultText.classList.remove("result-error");
+            } else {
+                resultText.textContent = "No data available for this year.";
+                resultText.classList.add("result-error");
+            }
+
+            resultDiv.classList.add("show");
+        }
+
+        // Allow Enter key to trigger search
+        document.getElementById("yearInput").addEventListener("keypress", (e) => {
+            if (e.key === "Enter") findMovie();
+        });
+    </script>
+</body>
+</html>
